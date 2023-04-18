@@ -20,7 +20,7 @@
 	
 	
   <ItemGroup>
-    <Folder Include="Services\ServicesRepositories\ServicesInterface\" />
+    <Folder Include="Services\ServicesRepositories\ServiceImplimentation\" />
   </ItemGroup>
 
 </Project>
