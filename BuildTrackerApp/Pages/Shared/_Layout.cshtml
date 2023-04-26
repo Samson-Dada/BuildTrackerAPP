@@ -17,13 +17,20 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
           rel="stylesheet" />
 
+    <environment name="Development">
+         <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    </environment>
+
+    <environment name="Production">
+        <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    </environment>
+
     <!-- Vendor CSS Files -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="css/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
 </head>
 <body>
     <!-- ======= Header ======= -->
@@ -148,35 +155,34 @@
     </header>
     <!-- End Header -->
 
-
-    <!---->
+    <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" asp-page="/index">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="add-build.html"> <i class="bi bi-menu-button-wide"></i>Add Builds</a>
+                <a class="nav-link" asp-page="builds/addbuild"> <i class="bi bi-menu-button-wide"></i>Add Builds</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="report-blocker.html"> <i class="bi bi-menu-button-wide"></i>Report Blocker</a>
+                <a class="nav-link" asp-page="blockers/addblocker"> <i class="bi bi-menu-button-wide"></i>Report Blocker</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="report-history.html" href="#"> <i class="bi bi-layout-text-window-reverse"></i>Report History </a>
+                <a class="nav-link" asp-page="blockers/viewallblocker" > <i class="bi bi-layout-text-window-reverse"></i>Report History </a>
                 <ul class="nav-content"></ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="user-profile.html">
+                <a class="nav-link" asp-page="users/user">
                     <i class="bi bi-person"></i>
                     Profile
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="users-profile.html">
+                <a class="nav-link" asp-page="/teams/viewallteam">
                     <i class="bi bi-people-fill"></i>
                     Connect Other Teams
                 </a>
@@ -190,10 +196,11 @@
             </li>
         </ul>
     </aside>
-
     <!---->
+
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main class="layout__main">
             @RenderBody()
         </main>
     </div>
@@ -204,12 +211,12 @@
         </div>
     </footer>
 @*
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>*@
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/main.js"></script>
 
+    <partial name="_ValidationScriptsPartial"/>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

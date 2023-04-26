@@ -1,0 +1,78 @@
+﻿@page
+@model BuildTrackerApp.Pages.Builds.AddBuidModel
+@{
+}
+
+
+<section class="form__section">
+    <div class="col-md-6 m-auto w-60">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add Blocker here</h5>
+                <form class="row g-3" method="post">
+                <div asp-validation-summary="All"></div>
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" asp-for="NewBuild.Title" id="floatingName" placeholder="Your Name" />
+                            <label  asp-for="NewBuild.Title">Title</label>
+                            <span asp-validation-for="NewBuild.Title" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Address" asp-for="NewBuild.ShortDescription" id="floatingTextarea" style="height: 60px"></textarea>
+                            <label for="floatingTextarea" asp-for="NewBuild.ShortDescription">Short Description</label>
+                            <span asp-validation-for="NewBuild.ShortDescription"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Address" asp-for="NewBuild.Description" id="floatingTextarea" style="height: 100px"></textarea>
+                            <label for="floatingTextarea" asp-for="NewBuild.Description">Description</label>
+                            <span asp-validation-for="NewBuild.Description"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" asp-for="NewBuild.Role" aria-label="Stack Role">
+                                <option value="Backend">Backend</option>
+                                <option value="Frontend">Frontend</option>
+                                <option value="Product Designer">Product Designer</option>
+                                <option value="Tester">Tester</option>
+                                <option value="DevOps">DevOps</option>
+                            </select>
+                            <label for="floatingSelect" asp-for="NewBuild.Role">Role</label>
+                            <span asp-validation-for="NewBuild.Role"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" id="floatingName" asp-for="NewBuild.OpenTask" placeholder="Your Name" />
+                            <label for="floatingName" asp-for="NewBuild.OpenTask">Open Task</label>
+                            <span asp-validation-for="NewBuild.OpenTask"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="number" class="form-control" asp-for="NewBuild.CloseTask" id="floatingName" placeholder="Your Name" />
+                            <label for="floatingName" asp-for="NewBuild.CloseTask">Close Task</label>
+                            <span asp-validation-for="NewBuild.CloseTask"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Add Build</button>
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

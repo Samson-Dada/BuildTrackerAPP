@@ -1,5 +1,6 @@
 ﻿using BuildTrackerApp.Data.Repositories.DataInterface;
 using BuildTrackerApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuildTrackerApp.Data.Repositories.DataImplimentation
 {
@@ -11,10 +12,15 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
         {
             _context = context;
         }
-        public ICollection<Team> GetAllTeam()
+        public async Task<ICollection<Team>> GetAllTeamAsync()
         {
-            var getallTeam =  _context.Teams.ToList();
+            var getallTeam = await _context.Teams.ToListAsync();
             return getallTeam;
+        }
+
+        public async Task GetTeamByIdAsync(int id)
+        {
+            var team = await _context.Teams.FirstOrDefaultAsync(t => t.Id == id);
         }
     }
 }

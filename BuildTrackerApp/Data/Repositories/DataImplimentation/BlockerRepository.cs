@@ -14,14 +14,13 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
         }
         public async Task AddAsync(Blocker blocker)
         {
-            var addBlocker = _context.Blockers.AddAsync(blocker);
+            await _context.Blockers.AddAsync(blocker);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var deleteBlockerId = await _context.Blockers.FirstOrDefaultAsync(x => x.Id == id);
-
+            await _context.Blockers.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<ICollection<Blocker>> GetAllAsync()

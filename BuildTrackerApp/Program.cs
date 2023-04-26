@@ -1,7 +1,30 @@
+using BuildTrackerApp.Data;
+using BuildTrackerApp.Data.Repositories.DataImplimentation;
+using BuildTrackerApp.Data.Repositories.DataInterface;
+using BuildTrackerApp.Services.ServicesRepositories.ServiceImplimentation;
+using BuildTrackerApp.Services.ServicesRepositories.ServicesInterface;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<BuildAppContext>(option =>
+{
+ option.UseSqlServer(builder.Configuration.GetConnectionString("BuildTrackerConnection"));
+});
+
+// REPOSITORY
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IBlockerRepository, BlockerRepository>();
+builder.Services.AddScoped<IBuildRepository, BuildRepository>();
+
+// SERVICES
+builder.Services.AddScoped<ITeamServices, TeamServices>();
+builder.Services.AddScoped<IBlockerServices, BlockerServices>();
+builder.Services.AddScoped<IBuildServices, BuildServices>();
+
+
 
 var app = builder.Build();
 

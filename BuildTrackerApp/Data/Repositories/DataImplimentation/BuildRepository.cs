@@ -18,7 +18,7 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var buildId = _context.Builds.FirstOrDefault(x => x.Id == id);
             if (buildId is not null)
@@ -37,15 +37,15 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
 
         public async Task<Build> GetByIdAsync(int id)
         {
-            var buildId = _context.Builds.FirstOrDefault(b => b.Id == id);
+            var buildId =  await _context.Builds.FirstOrDefaultAsync(b => b.Id == id);
             if (buildId is null)
             {
-                return;
+                return null;
             }
             return buildId;
         }
 
-        public async Task Update(Build build)
+        public async Task UpdateAsync(Build build)
         {
             var updateBuild = _context.Builds.Update(build);
             await _context.SaveChangesAsync();

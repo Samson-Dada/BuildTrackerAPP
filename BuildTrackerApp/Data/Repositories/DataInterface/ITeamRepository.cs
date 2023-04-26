@@ -4,6 +4,8 @@ namespace BuildTrackerApp.Data.Repositories.DataInterface
 {
     public interface ITeamRepository
     {
-        ICollection<Team> GetAllTeam();
+        Task<ICollection<Team>> GetAllTeamAsync();
+
+        Task GetTeamByIdAsync(int id);
     }
 }

@@ -1,20 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BuildTrackerApp.Data.Repositories.DataInterface;
+using BuildTrackerApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BuildTrackerApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IBuildRepository _buildRepository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IBuildRepository buildRepository)
         {
-            _logger = logger;
+            _buildRepository = buildRepository;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-
+           Builds =  await _buildRepository.GetAllAsync();
         }
+      
+        public ICollection<Build> Builds { get; set; }
     }
 }
