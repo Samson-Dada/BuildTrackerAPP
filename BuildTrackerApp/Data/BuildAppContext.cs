@@ -50,7 +50,7 @@ namespace BuildTrackerApp.Data
                     Description= "Unable to found package you are using",
                     Role = Role.Backend,
                     Priority = BlockerPriority.Medium,
-                    StackStatus = BlockerStatus.Bug,
+                    BlockerStatus = BlockerStatus.Bug,
                     CreatedTime = DateTime.Now,
                 },
                   new Blocker
@@ -61,7 +61,7 @@ namespace BuildTrackerApp.Data
                     Description= "Testing fail due to logical error that the function return",
                     Role = Role.Backend,
                     Priority = BlockerPriority.Medium,
-                    StackStatus = BlockerStatus.Testing,
+                    BlockerStatus = BlockerStatus.Testing,
                     CreatedTime = DateTime.Now,
                    }
             };

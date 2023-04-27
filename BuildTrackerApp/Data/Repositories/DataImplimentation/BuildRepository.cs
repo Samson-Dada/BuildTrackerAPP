@@ -37,7 +37,7 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
 
         public async Task<Build> GetByIdAsync(int id)
         {
-            var buildId =  await _context.Builds.FirstOrDefaultAsync(b => b.Id == id);
+            var buildId = await _context.Builds.FirstOrDefaultAsync(b => b.Id == id);
             if (buildId is null)
             {
                 return null;
@@ -49,8 +49,23 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
         {
             var updateBuild = _context.Builds.Update(build);
             await _context.SaveChangesAsync();
-
-
         }
+        public async Task<int> GetTotalCountAsync()
+        {
+            try
+            {
+                var totalCount = await _context.Builds.CountAsync();
+                if (totalCount >= 0)
+                {
+                    return totalCount;
+                }
+                return totalCount;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
     }
 }

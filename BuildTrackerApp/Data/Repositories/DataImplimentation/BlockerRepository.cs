@@ -1,6 +1,8 @@
 ﻿using BuildTrackerApp.Data.Repositories.DataInterface;
 using BuildTrackerApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Data.SqlTypes;
 
 namespace BuildTrackerApp.Data.Repositories.DataImplimentation
 {
@@ -23,11 +25,21 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
             await _context.Blockers.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+
         public async Task<ICollection<Blocker>> GetAllAsync()
         {
-            var allBlocker = await _context.Blockers.ToListAsync();
-            return allBlocker;
+            try
+            {
+                var allBlocker = await _context.Blockers.ToListAsync();
+                return allBlocker;
+            }
+            catch (SqlNullValueException)
+            {
+                return new List<Blocker>();
+
+            }
         }
+
 
         public async Task<Blocker> GetByIdAsync(int id)
         {
@@ -38,8 +50,31 @@ namespace BuildTrackerApp.Data.Repositories.DataImplimentation
 
         public async Task UpdateAsync(Blocker blocker)
         {
+            if(blocker == null)
+            {
+                throw new ArgumentNullException(nameof(blocker));
+            }
             _context.Blockers.Update(blocker).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<int> TotalCountAsync()
+        {
+            try
+            {
+
+                int totalCount = await _context.Blockers.CountAsync();
+                if (totalCount >= 1)
+                {
+                    return totalCount;
+                }
+                return totalCount;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
     }
 }

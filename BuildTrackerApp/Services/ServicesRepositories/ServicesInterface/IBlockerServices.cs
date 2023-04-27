@@ -10,5 +10,7 @@ namespace BuildTrackerApp.Services.ServicesRepositories.ServicesInterface
         Task DeleteBlockerAsync(int BlockerId);
         Task<Blocker> GetBlockerAsync(int id);
         Task<ICollection<Blocker>> GetAllBlockerAsync();
+
+        Task<int> GetTotalBlockerCountAsync();
     }
 }

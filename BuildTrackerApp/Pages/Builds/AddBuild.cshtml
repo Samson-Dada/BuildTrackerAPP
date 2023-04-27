@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "/builds/add";
+@using BuildTrackerApp.Models;
 @model BuildTrackerApp.Pages.Builds.AddBuidModel
 @{
 }
@@ -8,7 +9,7 @@
     <div class="col-md-6 m-auto w-60">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Add Blocker here</h5>
+                <h5 class="card-title">Add New Build Here</h5>
                 <form class="row g-3" method="post">
                 <div asp-validation-summary="All"></div>
                     <div class="col-md-12">
@@ -38,15 +39,11 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect" asp-for="NewBuild.Role" aria-label="Stack Role">
-                                <option value="Backend">Backend</option>
-                                <option value="Frontend">Frontend</option>
-                                <option value="Product Designer">Product Designer</option>
-                                <option value="Tester">Tester</option>
-                                <option value="DevOps">DevOps</option>
+                            <select class="form-select" id="floatingSelect" 
+                            asp-for="NewBuild.Role" asp-items="Html.GetEnumSelectList<Role>()" aria-label="Stack Role">
                             </select>
                             <label for="floatingSelect" asp-for="NewBuild.Role">Role</label>
-                            <span asp-validation-for="NewBuild.Role"></span>
+                            <span asp-validation-for="NewBuild.Role" class="text-danger"></span>
 
                         </div>
                     </div>
@@ -54,7 +51,7 @@
                         <div class="form-floating">
                             <input type="number" class="form-control" id="floatingName" asp-for="NewBuild.OpenTask" placeholder="Your Name" />
                             <label for="floatingName" asp-for="NewBuild.OpenTask">Open Task</label>
-                            <span asp-validation-for="NewBuild.OpenTask"></span>
+                            <span asp-validation-for="NewBuild.OpenTask" class="text-danger"></span>
 
                         </div>
                     </div>
@@ -62,7 +59,7 @@
                         <div class="form-floating">
                             <input type="number" class="form-control" asp-for="NewBuild.CloseTask" id="floatingName" placeholder="Your Name" />
                             <label for="floatingName" asp-for="NewBuild.CloseTask">Close Task</label>
-                            <span asp-validation-for="NewBuild.CloseTask"></span>
+                            <span asp-validation-for="NewBuild.CloseTask" class="text-danger"></span>
 
                         </div>
                     </div>

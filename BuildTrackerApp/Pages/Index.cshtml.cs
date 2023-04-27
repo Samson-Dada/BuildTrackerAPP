@@ -1,5 +1,6 @@
 ﻿using BuildTrackerApp.Data.Repositories.DataInterface;
 using BuildTrackerApp.Models;
+using BuildTrackerApp.Services.ServicesRepositories.ServicesInterface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,18 +8,14 @@ namespace BuildTrackerApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IBuildRepository _buildRepository;
 
-        public IndexModel(IBuildRepository buildRepository)
+        public IndexModel()
         {
-            _buildRepository = buildRepository;
         }
 
-        public async Task OnGet()
+        public void OnGet()
         {
-           Builds =  await _buildRepository.GetAllAsync();
         }
-      
-        public ICollection<Build> Builds { get; set; }
+
     }
 }

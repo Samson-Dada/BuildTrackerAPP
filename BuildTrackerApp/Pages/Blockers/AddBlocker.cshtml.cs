@@ -24,6 +24,7 @@ namespace BuildTrackerApp.Pages.Blockers
             {
                 return Page();
             }
+            Blockers.CreatedTime = DateTime.Now.ToUniversalTime();
             await _blockerServices.CreateBlockerAsync(Blockers);
             return RedirectToPage("../Index");
         }

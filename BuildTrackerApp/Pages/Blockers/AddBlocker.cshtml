@@ -1,6 +1,64 @@
-﻿@page "/blocker/add";
+﻿@page
+@using BuildTrackerApp.Models
+           
 @model BuildTrackerApp.Pages.Blockers.AddBlockerModel
 @{
 
 }
-<h1>Add new blocker</h1>
+
+<section class="form__section">
+    <div class="col-md-6 m-auto w-50">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add Blocker here</h5>
+
+                <form class="row g-3" method="post">
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" asp-for="Blockers.Title" id="floatingName" placeholder="" />
+                            <label for="floatingName" asp-for="Blockers.Title">Title</label>
+                            <span asp-validation-for="Blockers.Title" class=" text-danger" ></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Address" asp-for="Blockers.Description" id="floatingTextarea" style="height: 100px"></textarea>
+                            <label for="floatingTextarea" asp-for="Blockers.Description">Description</label>
+                            <span asp-validation-for="Blockers.Description" class="text-danger" ></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="floatingSelect" 
+                            asp-for="Blockers.Role" asp-items="Html.GetEnumSelectList<Role>()" aria-label="Stack Role">
+                            </select>
+                            <label for="floatingSelect" asp-for="Blockers.Role">Role</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" asp-for="Blockers.BlockerStatus" asp-items="Html.GetEnumSelectList<BlockerStatus>()" id="floatingSelect" aria-label="Blocker Status">
+                            </select>
+                            <label for="floatingSelect">Blocker Status</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select class="form-select" asp-for="Blockers.Priority" 
+                            asp-items="Html.GetEnumSelectList<BlockerPriority>()" id="floatingSelect" aria-label="Priority">
+                            </select>
+                            <label for="floatingSelect" asp-for="Blockers.Priority">Priority</label>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

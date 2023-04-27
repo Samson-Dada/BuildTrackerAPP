@@ -37,6 +37,11 @@ namespace BuildTrackerApp.Services.ServicesRepositories.ServiceImplimentation
         {
            await _buildRepository.UpdateAsync(build);
         }
+        public async Task<int> GetTotalBuildAsync()
+        {
+            var totalBuild = await _buildRepository.GetTotalCountAsync();
+            return totalBuild;
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 using BuildTrackerApp.Data.Repositories.DataInterface;
 using BuildTrackerApp.Models;
+using BuildTrackerApp.Services.ServicesRepositories.ServicesInterface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,17 +8,28 @@ namespace BuildTrackerApp.Pages.Builds
 {
     public class ViewAllBuildModel : PageModel
     {
-        private readonly IBuildRepository _buildRepository;
-        public ViewAllBuildModel(IBuildRepository buildRepository)
+        private readonly IBuildServices _buildServices;
+        public ViewAllBuildModel(IBuildServices buildServices)
         {
-            _buildRepository = buildRepository;
+            _buildServices = buildServices;
         }
 
         [BindProperty]
         public ICollection<Build> Builds { get; set; }
-        public async void OnGet()
+        public async Task OnGet()
         {
-          Builds = await _buildRepository.GetAllAsync();
+          Builds = await _buildServices.GetAllBuildAsync();
         }
     }
 }
+
+
+/*
+ 
+   public ICollection<Team> Teams { get; set; }
+
+        public async Task OnGet()
+        {
+            Teams = await _teamServices.GetAllTeamAsync();
+        }
+ */

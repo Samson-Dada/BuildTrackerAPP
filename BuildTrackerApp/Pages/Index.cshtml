@@ -1,114 +1,57 @@
-﻿@page 
+﻿@page "home"
+@using BuildTrackerApp.Models;
 @using Humanizer;
+@inject BuildTrackerApp.Services.ServicesRepositories.ServicesInterface.IBlockerServices _blockerServices;
+@inject BuildTrackerApp.Services.ServicesRepositories.ServicesInterface.IBuildServices _buildServices;
 @model IndexModel
 @{
+
     ViewData["Title"] = "Home page";
 }
 
-<div class="pagetitle">
-    <h1>Dashboard</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active">Report Overview</li>
-        </ol>
-    </nav>
-</div>
-<!-- End Page Title -->
-<!--  -->
-<!--  -->
+<style>
+    .home__container{
+        margin-top: 8rem;
+    }
+</style>
 
-<div class="container">
-<section>
-    <div class="row">
-        <div class="col-lg-10">
-            <div class="row">
-                <div class="col-xxl-2">
-                    <div class="card bg-success-light">
-                        <div class="card-body">
-                            <h6 class="card-title">20</h6>
-                            <p class="card-text">Resolved</p>
+
+<div class="container home__container">
+    <div class="pagetitle">
+        <h1>Builds </h1>
+    </div>
+    <section>
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-xxl-3">
+                        <div class="card bg-danger-light">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                  @_blockerServices.GetTotalBlockerCountAsync().Result
+                                </h6>
+                                <p class="card-text">Blocker Reported</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xxl-2">
-                    <div class="card bg-success">
-                        <div class="card-body">
-                            <h6 class="card-title">20</h6>
-                            <p class="card-text">Close Bugs</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-2">
-                    <div class="card bg-danger-light">
-                        <div class="card-body">
-                            <h5 class="card-title">100</h5>
-                            <p class="card-text">Open bugs</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-2">
-                    <div class="card bg-warning">
-                        <div class="card-body">
-                            <h5 class="card-title">24</h5>
-                            <p class="card-text">Due Today</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxl-2">
-                    <div class="card bg-danger">
-                        <div class="card-body">
-                            <h5 class="card-title">20</h5>
-                            <p class="card-text">Over Due</p>
+                    <div class="col-xxl-3">
+                        <div class="card bg-success-light">
+                            <div class="card-body">
+                                <h6 class="card-title"> 
+                                @_buildServices.GetTotalBuildAsync().Result
+                                </h6>
+                                <p class="card-text">Builds Reported</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </div>
 <!--  -->
-<div class="pagetitle">
-    <h1>Dashboard</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Build Flow</li>
-        </ol>
-    </nav>
-</div>
-<section class="section dashboard">
-    <div class="row">
-        <div class="col-lg-10">
-            <div class="row">
-                @foreach (var build in Model.Builds)
-                {
-                <div class="col-xxl-4">
-                    <div class="card border-warning red-card">
-                        <div class="card-body">
-                            <h5 class="card-title">@build.Title<span>| @build.CreatedTime.Humanize()</span></h5>
 
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-hdd-rack-fill"></i>
-                                </div>
-                                <h6 class="ps-3"><a asp-page="builds/builddetails" asp-route-id="@build.Id" class="text-dark">@build.ShortDescription</a></h6>
-                            </div>
-                            <div class="d-flex border-top mt-2 p-2 justify-content-between">
-                                <p class="bold">Tasks</p>
-                                <div class="d-flex">
-                                    <p class="px-2">@build.OpenTask <span>Open</span></p>
-                                    <p class="px-2">@build.CloseTask <span class="">Closed</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                }
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!--Project section-->
 <section class="project__section">

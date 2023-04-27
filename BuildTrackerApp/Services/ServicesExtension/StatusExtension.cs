@@ -4,14 +4,15 @@ namespace BuildTrackerApp.Services.ServicesExtension
 {
     public static class StatusExtension
     {
-        static readonly Dictionary<bool, string> _statusCss = new()
+        static readonly Dictionary<BlockerPriority, string> _statusCss = new()
         {
-            { true, "bg-gradient-success"},
-            { false, "bg-gradient-red"}
+            { BlockerPriority.High, "bg-danger"},
+            { BlockerPriority.Low, "bg-success"},
+            { BlockerPriority.Medium, "bg-warning"},
         };
-        //public static string StatusInfo(this string status ) 
-        //{
-        //   return _statusCss[bool, _statusCss];
-        //}
+        public static string PriorityCss(this BlockerPriority priority)
+        {
+            return _statusCss[priority];
+        }
     }
 }

@@ -38,5 +38,13 @@ namespace BuildTrackerApp.Services.ServicesRepositories.ServiceImplimentation
         {
             await _blockerRepository.UpdateAsync(blocker);
         }
+
+        public async Task<int> GetTotalBlockerCountAsync()
+        {
+            var totalBlockerCount = await _blockerRepository.TotalCountAsync();
+            return totalBlockerCount;
+        }
+
+      
     }
 }

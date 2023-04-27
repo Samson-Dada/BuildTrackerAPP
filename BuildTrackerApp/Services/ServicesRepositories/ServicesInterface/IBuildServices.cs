@@ -9,5 +9,7 @@ namespace BuildTrackerApp.Services.ServicesRepositories.ServicesInterface
         Task DeleteBuildAsync(int id);
         Task UpdateBuildAsync(Build build);
         Task<Build> GetBuildByIdAsync(int id);
+
+        Task<int> GetTotalBuildAsync();
     }
 }

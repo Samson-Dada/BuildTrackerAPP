@@ -1,10 +1,11 @@
-﻿@page
+﻿@page "/blockers/all";
+@using BuildTrackerApp.Services.ServicesExtension;
 @using Humanizer;
 @model BuildTrackerApp.Pages.Blockers.ViewAllBlockerModel
 @{
 }
  <div class="pagetitle">
-        <h1>Report History</h1>
+        <h1>Blocker History</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -13,38 +14,47 @@
         </nav>
   </div>
 
-<section class="section">
+<section class="section mt-5">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Report History Table</h5>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Stack</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Priority</th>
-                                <th scope="col">Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           @foreach(var blocker in Model.Blockers)
-                           {
-                             <tr>
-                                <th scope="row">@blocker.Id</th>
-                                <td>@blocker.Title</td>
-                                <td>@blocker.Role</td>
-                                <td>@blocker.StackStatus</td>
-                                <td>@blocker.Priority</td>
-                                <td>@blocker.CreatedTime.Humanize()</td>
-                                <td><a href="#" class="">Edit</a></td>
-                             </tr>
-                           }
-                        </tbody>
-                    </table>
+                    @if(Model.Blockers.Count() == 0)
+                    {
+                        <div class="alert alert-info w-50 m-auto" role="alert">
+                            <p class="text-center">No data to display</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Stack</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Priority</th>
+                                    <th scope="col">Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var blocker in Model.Blockers)
+                                {
+                                    <tr>
+                                        <th scope="row">@blocker.Id</th>
+                                        <td>@blocker.Title</td>
+                                        <td>@blocker.Role</td>
+                                        <td>@blocker.BlockerStatus</td>
+                                        <td class="@blocker.Priority.PriorityCss()">@blocker.Priority</td>
+                                        <td>@blocker.CreatedTime.Humanize()</td>
+                                        <td><a asp-page="/blockers/resolve" asp-route-id="@blocker.Id" class="">Edit</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </div>
         </div>

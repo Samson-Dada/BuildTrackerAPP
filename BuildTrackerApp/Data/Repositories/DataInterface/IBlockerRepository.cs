@@ -9,5 +9,10 @@ namespace BuildTrackerApp.Data.Repositories.DataInterface
         Task<Blocker> GetByIdAsync(int id);
         Task<ICollection<Blocker>> GetAllAsync();
         Task DeleteAsync(int id);
+
+        Task<int> TotalCountAsync();
+
+        ///
+      
     }
 }

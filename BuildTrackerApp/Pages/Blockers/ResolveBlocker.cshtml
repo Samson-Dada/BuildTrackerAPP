@@ -1,0 +1,80 @@
+﻿@page "/blockers/resolves/{id:int}";
+@using BuildTrackerApp.Services.ServicesExtension;
+@using Humanizer;
+@model BuildTrackerApp.Pages.Blockers.ResolveBlockerModel
+@{
+}
+
+<style>
+    .resolve__section{
+        margin-top:7rem;
+        margin-bottom:2rem;
+    }
+</style>
+
+<section class="resolve__section">
+
+    <div class="card  w-50 m-auto"> 
+    <div class="mt-5">
+    @if (Model.Blocker == null)
+    {
+        <div class="alert alert-warning" role="alert">
+            Issues not found
+        </div>
+    }
+    else
+    {
+        <div class="p-3">
+            <h3> @Model.Blocker.Title</h3>
+                <div class="border-bottom p-3 border-top">
+                <span class="badge bg-info">@Model.Blocker.BlockerStatus</span>
+                    <span class="@Model.Blocker.Priority.PriorityCss() p-1 border badge">@Model.Blocker.Priority</span>
+                <span class="badge bg-info">@Model.Blocker.CreatedTime.Humanize(utcDate:false)</span>
+            </div>
+                <p class="mt-4 text-capitalize border-bottom pb-3">@Model.Blocker.Description</p>
+            <button class="btn btn-outline-primary" id="resolveButton" data-issuesid="@Model.Blocker.Id" type="submit">Resolve</button>
+        </div>
+    }
+    </div>
+    </div>
+</section>
+
+@section Scripts
+    {
+    <script>
+        $(function () {
+            var resolveBtn = document.getElementById("resolveButton")
+            resolveBtn.addEventListener("click", function (e) {
+                e.preventDefault()
+                var issueId = resolveBtn.getAttribute("data-issuesid")
+                $.get(`?handler=resolve&id=${issueId}`, function () {
+                    alert(`Issue ${issueId} has been resolved`)
+                    Window.location.href = '/';
+                })
+            })
+        })
+    </script>
+    }
+
+@*
+window.addEventListener('DOMContentLoaded', function() {
+  var resolveBtn = document.getElementById('resolveButton');
+  resolveBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    var issueId = resolveBtn.getAttribute('data-issuesid');
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          alert(`Issue ${issueId} has been resolved`);
+          window.location.href = '/';
+        } else {
+          console.error('Error resolving issue');
+        }
+      }
+    };
+    xhr.open('GET', `?handler=resolve&id=${issueId}`);
+    xhr.send();
+  });
+});
+*@
