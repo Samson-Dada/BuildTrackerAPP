@@ -1,6 +1,7 @@
 using BuildTrackerApp.Data;
 using BuildTrackerApp.Data.Repositories.DataImplimentation;
 using BuildTrackerApp.Data.Repositories.DataInterface;
+using BuildTrackerApp.Services.ServiceData;
 using BuildTrackerApp.Services.ServicesRepositories.ServiceImplimentation;
 using BuildTrackerApp.Services.ServicesRepositories.ServicesInterface;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,13 @@ builder.Services.AddDbContext<BuildAppContext>(option =>
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IBlockerRepository, BlockerRepository>();
 builder.Services.AddScoped<IBuildRepository, BuildRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 // SERVICES
 builder.Services.AddScoped<ITeamServices, TeamServices>();
 builder.Services.AddScoped<IBlockerServices, BlockerServices>();
 builder.Services.AddScoped<IBuildServices, BuildServices>();
+builder.Services.AddScoped<IServiceDataFetch, ServiceDataFetch>();
 
 
 

@@ -1,12 +1,17 @@
 ﻿@page "home"
 @using BuildTrackerApp.Models;
 @using Humanizer;
+@using Newtonsoft.Json;
+@using BuildTrackerApp.Services.ServiceData
 @inject BuildTrackerApp.Services.ServicesRepositories.ServicesInterface.IBlockerServices _blockerServices;
 @inject BuildTrackerApp.Services.ServicesRepositories.ServicesInterface.IBuildServices _buildServices;
+@inject BuildTrackerApp.Services.ServiceData.IServiceDataFetch _iServiceDataFetch;
+
 @model IndexModel
 @{
 
     ViewData["Title"] = "Home page";
+
 }
 
 <style>
@@ -15,16 +20,21 @@
     }
 </style>
 
+<!-- ======= Sidebar ======= -->
+<partial name="SidebarDashboard" />
 
+<!---->
 <div class="container home__container">
-    <div class="pagetitle">
-        <h1>Builds </h1>
-    </div>
+    
     <section>
         <div class="row">
             <div class="col-lg-10">
                 <div class="row">
                     <div class="col-xxl-3">
+                        <div class="pagetitle">
+                            <h1>Blocker Flow </h1>
+                        </div>
+                    <div class="col">
                         <div class="card bg-danger-light">
                             <div class="card-body">
                                 <h6 class="card-title">
@@ -34,13 +44,19 @@
                             </div>
                         </div>
                     </div>
+                     </div>
                     <div class="col-xxl-3">
-                        <div class="card bg-success-light">
-                            <div class="card-body">
-                                <h6 class="card-title"> 
-                                @_buildServices.GetTotalBuildAsync().Result
-                                </h6>
-                                <p class="card-text">Builds Reported</p>
+                        <div class="pagetitle">
+                            <h1>Blocker Flow </h1>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-success-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        @_buildServices.GetTotalBuildAsync().Result
+                                    </h6>
+                                    <p class="card-text">Builds Reported</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,121 +91,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Prototype</h6>
+                                    @foreach(var data in _iServiceDataFetch.GetAllProject())
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">@data.Backlog</h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
 
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-xs font-weight-bold"> In Progress </span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div class="progress-wrapper w-75 mx-auto">
-                                                <div class="progress-info">
-                                                    <div class="progress-percentage">
-                                                        <span class="text-xs font-weight-bold">60%</span>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold"> In Progress @data.Status</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="progress-wrapper w-75 mx-auto">
+                                                    <div class="progress-info">
+                                                        <div class="progress-percentage">
+                                                            <span class="text-xs font-weight-bold">@data.Completion%</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-info w-60"
-                                                         role="progressbar"
-                                                         aria-valuenow="60"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Add Progress Track</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-xs font-weight-bold"> In Progress </span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div class="progress-wrapper w-75 mx-auto">
-                                                <div class="progress-info">
-                                                    <div class="progress-percentage">
-                                                        <span class="text-xs font-weight-bold">10%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-info w-10"
-                                                         role="progressbar"
-                                                         aria-valuenow="10"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Fix Platform Errors</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-xs font-weight-bold">Working </span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div class="progress-wrapper w-75 mx-auto">
-                                                <div class="progress-info">
-                                                    <div class="progress-percentage">
-                                                        <span class="text-xs font-weight-bold">100%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success w-100"
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-gradient-success w-@data.Completion"
                                                          role="progressbar"
                                                          aria-valuenow="100"
                                                          aria-valuemin="0"
                                                          aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Launch our Mobile App</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-xs font-weight-bold"> In Progress </span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div class="progress-wrapper w-75 mx-auto">
-                                                <div class="progress-info">
-                                                    <div class="progress-percentage">
-                                                        <span class="text-xs font-weight-bold">100%</span>
                                                     </div>
                                                 </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-success w-100"
-                                                         role="progressbar"
-                                                         aria-valuenow="100"
-                                                         aria-valuemin="0"
-                                                         aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
